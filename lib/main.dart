@@ -1,108 +1,120 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ContactListApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ContactListApp extends StatelessWidget {
+  const ContactListApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Module 5 Assignment',
-      theme: ThemeData(
-        primaryColor: Colors.amber,
-      ),
-      home: const ProfileScreen(),
+      title: 'Contact List UI',
+      home: const ContactListScreen(),
     );
   }
 }
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ContactListScreen extends StatelessWidget {
+  const ContactListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, String>> contacts = [
+      {'name': 'Jawad', 'phone': '01877-777777'},
+      {'name': 'Ferdous', 'phone': '01673-777777'},
+      {'name': 'Hasan', 'phone': '01745-777777'},
+      {'name': 'Hasan', 'phone': '01745-777777'},
+      {'name': 'Hasan', 'phone': '01745-777777'},
+    ];
+
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.amber,
-        elevation: 0,
         title: const Text(
-          'My Profile',
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+          'Contact List',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add, color: Colors.black87),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.black87),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.phone, color: Colors.black87),
-            onPressed: () {},
-          ),
-        ],
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey[700],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // First Item: Ice cream Section
-              const CircleAvatar(
-                radius: 100,
-                backgroundColor: Color(0xFFE8E0FF),
-                child: Icon(
-                  Icons.icecream_outlined,
-                  size: 100,
-                  color: Color(0xFF2E0066),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Ice cream is very delicious right?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
 
-              const SizedBox(height: 40),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Name',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              ),
+            ),
+            const SizedBox(height: 10),
 
-              const CircleAvatar(
-                radius: 100,
-                backgroundColor: Color(0xFFE8E0FF),
-                child: Icon(
-                  Icons.code,
-                  size: 100,
-                  color: Color(0xFF2E0066),
+
+            TextFormField(
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                hintText: 'Number',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey[600],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  'Add',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Programming is not boring if you love it',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+            ),
+            const SizedBox(height: 15),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: contacts.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: Colors.grey[100],
+                    elevation: 0,
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person_pin,
+                        size: 35,
+                        color: Colors.brown[400],
+                      ),
+                      title: Text(
+                        contacts[index]['name']!,
+                        style: const TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(contacts[index]['phone']!),
+                      trailing: const Icon(
+                        Icons.phone,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
